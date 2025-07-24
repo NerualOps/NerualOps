@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Copyright Notices - Neural Operations Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .policy-page {
+      min-height: 100vh;
+      padding: 120px 3rem 6rem 3rem;
+      background: var(--neural-darker);
+    }
+
+    .policy-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .policy-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .policy-title {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, var(--neural-text), var(--neural-primary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .policy-subtitle {
+      font-size: 1rem;
+      color: var(--neural-muted);
+      font-style: italic;
+    }
+
+    .policy-content {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.05), rgba(0, 204, 255, 0.02));
+      border: 1px solid rgba(0, 102, 255, 0.1);
+      border-radius: 16px;
+      padding: 3rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .policy-content p {
+      color: var(--neural-muted);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .policy-content ul {
+      margin: 2rem 0;
+      padding-left: 0;
+      list-style: none;
+    }
+
+    .policy-content ul li {
+      color: var(--neural-muted);
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-left: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .policy-content ul li::before {
+      content: '•';
+      position: absolute;
+      left: 0;
+      color: var(--neural-primary);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .policy-content strong {
+      color: var(--neural-text);
+      font-weight: 600;
+    }
+
+    .contact-email {
+      color: var(--neural-primary);
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s ease;
+    }
+
+    .contact-email:hover {
+      color: var(--neural-secondary);
+    }
+
+    .back-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 1rem 2rem;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--neural-text);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+      margin-top: 3rem;
+    }
+
+    .back-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--neural-primary);
+      transform: translateY(-2px);
+    }
+
+    /* Remove blue highlighting on selection */
+    ::selection {
+      background: rgba(0, 102, 255, 0.2);
+      color: var(--neural-text);
+    }
+
+    ::-moz-selection {
+      background: rgba(0, 102, 255, 0.2);
+      color: var(--neural-text);
+    }
+
+    @media (max-width: 768px) {
+      .policy-page {
+        padding: 100px 1.5rem 4rem 1.5rem;
+      }
+
+      .policy-title {
+        font-size: 2rem;
+      }
+
+      .policy-content {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-trail"></div>
+  <canvas class="neural-canvas" id="neuralCanvas"></canvas>
+
+  <header class="header" id="header">
+    <a href="index.html" class="logo">neural.ops</a>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="index.html#services" class="nav-link">Capabilities</a></li>
+        <li><a href="index.html#process" class="nav-link">Process</a></li>
+        <li><a href="index.html#contact" class="nav-link">Intelligence</a></li>
+        <li><a href="mailto:neuralops@gmail.com?subject=Neural%20Operations%20Consultation" class="nav-cta">Initiate Contact</a></li>
+      </ul>
+    </nav>
+    <button class="mobile-menu-toggle">☰</button>
+  </header>
+
+  <main class="policy-page">
+    <div class="policy-container">
+      <div class="policy-header">
+        <h1 class="policy-title">Copyright Notices</h1>
+        <p class="policy-subtitle">Last updated: July 2025</p>
+      </div>
+
+      <div class="policy-content">
+        <p><strong>© 2025 Neural Ops. All rights reserved.</strong></p>
+
+        <p>This website and its content, including but not limited to text, graphics, images, logos, and software, are the property of Neural Ops and are protected by copyright and other intellectual property laws.</p>
+
+        <p><strong>Third-Party Resources:</strong></p>
+        <ul>
+          <li>Google Fonts (Inter & JetBrains Mono) - Used under Open Font License</li>
+          <li>Various open-source libraries and frameworks used in compliance with their respective licenses</li>
+        </ul>
+
+        <p><strong>Permitted Use:</strong></p>
+        <p>You may view and use this website for personal and non-commercial purposes. Any reproduction, distribution, or modification of this content requires written permission from Neural Ops.</p>
+
+        <p><strong>Contact for Permissions:</strong></p>
+        <p>For questions about copyright permissions or licensing, contact us at <a href="mailto:neuralops@gmail.com" class="contact-email">neuralops@gmail.com</a></p>
+
+        <a href="index.html" class="back-button">
+          ← Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2025 Neural Ops. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy_policy.html" class="footer-link">Privacy Policy</a>
+        <a href="contact_page.html" class="footer-link">Contact</a>
+        <a href="copyright.html" class="footer-link">Copyright Notices</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
