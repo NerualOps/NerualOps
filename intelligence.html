@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neural Intelligence - Neural Operations Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Additional styles specific to intelligence page */
+    .intelligence-page {
+      min-height: 100vh;
+      padding: 0;
+      position: relative;
+    }
+
+    /* 3D Brain Scene */
+    .brain-scene {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    #brain-canvas {
+      width: 100%;
+      height: 100%;
+      opacity: 0.6;
+    }
+
+    /* Hero Section with 3D Integration */
+    .intelligence-hero {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      background: radial-gradient(ellipse at center, rgba(0, 102, 255, 0.08) 0%, transparent 70%);
+      overflow: hidden;
+    }
+
+    .intelligence-hero-content {
+      text-align: center;
+      z-index: 10;
+      max-width: 900px;
+      padding: 0 3rem;
+    }
+
+    .intelligence-title {
+      font-size: clamp(4rem, 8vw, 7rem);
+      font-weight: 900;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, #ffffff 0%, var(--neural-primary) 30%, var(--neural-secondary) 70%, #ffffff 100%);
+      background-size: 300% 300%;
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 6s ease-in-out infinite;
+      line-height: 0.9;
+      letter-spacing: -0.02em;
+    }
+
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .intelligence-subtitle {
+      font-size: 1.6rem;
+      color: var(--neural-muted);
+      margin-bottom: 3rem;
+      line-height: 1.4;
+      font-weight: 300;
+    }
+
+    .scroll-indicator {
+      position: absolute;
+      bottom: 3rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--neural-primary);
+      font-size: 0.9rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      animation: bounce 2s infinite;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    @keyframes bounce {
+      0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
+      40% { transform: translateX(-50%) translateY(-10px); }
+      60% { transform: translateX(-50%) translateY(-5px); }
+    }
+
+    .scroll-arrow {
+      width: 2px;
+      height: 30px;
+      background: linear-gradient(to bottom, var(--neural-primary), transparent);
+      position: relative;
+    }
+
+    .scroll-arrow::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -3px;
+      width: 8px;
+      height: 8px;
+      border: 2px solid var(--neural-primary);
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg);
+    }
+
+    /* Beyond Section with Interactive Neural Network */
+    .beyond-section {
+      min-height: 100vh;
+      padding: 8rem 0;
+      display: flex;
+      align-items: center;
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.05) 0%, transparent 70%);
+    }
+
+    .beyond-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 3rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .intelligence-features {
+      display: grid;
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .intelligence-feature {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 204, 255, 0.05));
+      border: 1px solid rgba(0, 102, 255, 0.2);
+      border-radius: 16px;
+      padding: 2.5rem;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .intelligence-feature::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neural-primary), var(--neural-secondary));
+      transition: left 0.6s ease;
+    }
+
+    .intelligence-feature:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 102, 255, 0.4);
+      box-shadow: 0 25px 60px rgba(0, 102, 255, 0.25);
+    }
+
+    .intelligence-feature:hover::before {
+      left: 100%;
+    }
+
+    .feature-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--neural-text);
+      margin-bottom: 1rem;
+    }
+
+    .feature-description {
+      color: var(--neural-muted);
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+
+    /* 3D Neural Network Visualization */
+    .neural-visual {
+      position: relative;
+      height: 600px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .neural-network-3d {
+      width: 500px;
+      height: 500px;
+      position: relative;
+      transform-style: preserve-3d;
+      animation: rotate3d 25s linear infinite;
+    }
+
+    @keyframes rotate3d {
+      from { transform: rotateY(0deg) rotateX(15deg); }
+      to { transform: rotateY(360deg) rotateX(15deg); }
+    }
+
+    .network-node {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: radial-gradient(circle, var(--neural-primary), var(--neural-secondary));
+      border-radius: 50%;
+      box-shadow: 0 0 15px rgba(0, 102, 255, 0.6);
+      animation: nodePulse 4s ease-in-out infinite;
+    }
+
+    @keyframes nodePulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.8); opacity: 1; }
+    }
+
+    .network-connection {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(0, 102, 255, 0.4), rgba(0, 204, 255, 0.4));
+      transform-origin: left center;
+      animation: connectionFlow 5s ease-in-out infinite;
+    }
+
+    @keyframes connectionFlow {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; box-shadow: 0 0 8px rgba(0, 102, 255, 0.8); }
+    }
+
+    /* Examples Section */
+    .examples-section {
+      padding: 8rem 0;
+      background: linear-gradient(180deg, var(--neural-darker) 0%, var(--neural-gray) 100%);
+    }
+
+    .examples-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 3rem;
+      margin-top: 4rem;
+    }
+
+    .example-card {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 204, 255, 0.05));
+      border: 1px solid rgba(0, 102, 255, 0.2);
+      border-radius: 20px;
+      padding: 3rem;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(20px);
+    }
+
+    .example-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neural-primary), var(--neural-secondary));
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
+    }
+
+    .example-card:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 102, 255, 0.4);
+      box-shadow: 0 30px 80px rgba(0, 102, 255, 0.3);
+    }
+
+    .example-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .example-icon {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--neural-primary), var(--neural-secondary));
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-weight: 700;
+      font-size: 1.2rem;
+      color: var(--neural-text);
+    }
+
+    .example-title {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--neural-text);
+      margin-bottom: 1rem;
+    }
+
+    .example-description {
+      color: var(--neural-muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    .example-features {
+      list-style: none;
+      padding: 0;
+    }
+
+    .example-features li {
+      color: var(--neural-text);
+      font-size: 0.95rem;
+      margin-bottom: 0.8rem;
+      position: relative;
+      padding-left: 2rem;
+      font-weight: 500;
+    }
+
+    .example-features li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--neural-primary);
+      font-weight: 600;
+    }
+
+    /* Comparison Table */
+    .comparison-section {
+      padding: 8rem 0;
+      background: radial-gradient(ellipse at center, rgba(0, 102, 255, 0.08) 0%, transparent 70%);
+    }
+
+    .comparison-table {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 204, 255, 0.05));
+      border: 1px solid rgba(0, 102, 255, 0.2);
+      border-radius: 20px;
+      padding: 3rem;
+      backdrop-filter: blur(20px);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .comparison-table::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neural-primary), var(--neural-secondary));
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 2rem;
+    }
+
+    .feature-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .feature-table th,
+    .feature-table td {
+      padding: 1.5rem;
+      text-align: left;
+      border-bottom: 1px solid rgba(0, 102, 255, 0.1);
+    }
+
+    .feature-table th {
+      background: rgba(0, 102, 255, 0.1);
+      color: var(--neural-text);
+      font-weight: 600;
+      font-size: 1.1rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .feature-table td {
+      color: var(--neural-muted);
+      vertical-align: middle;
+      font-size: 1rem;
+    }
+
+    .feature-table .feature-name {
+      color: var(--neural-text);
+      font-weight: 500;
+    }
+
+    .check-mark {
+      color: var(--neural-primary);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .x-mark {
+      color: var(--neural-accent);
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    /* CTA Section */
+    .intelligence-cta {
+      padding: 8rem 0;
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 204, 255, 0.1));
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 3rem;
+    }
+
+    .cta-button {
+      padding: 1.5rem 3rem;
+      background: linear-gradient(135deg, var(--neural-primary), var(--neural-secondary));
+      color: var(--neural-text);
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+      display: inline-block;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 25px 60px rgba(0, 102, 255, 0.5);
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    .cta-button.secondary {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    .cta-button.secondary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      border-color: var(--neural-primary);
+    }
+
+    /* Floating Particles */
+    .floating-particles {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: var(--neural-primary);
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: float 12s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.4; }
+      50% { transform: translateY(-150px) rotate(180deg); opacity: 1; }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+      .beyond-container {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        text-align: center;
+      }
+
+      .neural-network-3d {
+        width: 400px;
+        height: 400px;
+      }
+
+      .examples-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .intelligence-hero-content {
+        padding: 0 1.5rem;
+      }
+
+      .intelligence-title {
+        font-size: 3.5rem;
+      }
+
+      .intelligence-subtitle {
+        font-size: 1.3rem;
+      }
+
+      .beyond-container,
+      .section-container {
+        padding: 0 1.5rem;
+      }
+
+      .beyond-section,
+      .examples-section,
+      .comparison-section,
+      .intelligence-cta {
+        padding: 6rem 0;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .neural-network-3d {
+        width: 300px;
+        height: 300px;
+      }
+
+      .examples-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .example-card {
+        padding: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-trail"></div>
+  <canvas class="neural-canvas" id="neuralCanvas"></canvas>
+
+  <!-- 3D Brain Scene -->
+  <div class="brain-scene">
+    <canvas id="brain-canvas"></canvas>
+  </div>
+
+  <header class="header" id="header">
+    <a href="index.html" class="logo">neural.ops</a>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="index.html#services" class="nav-link">Capabilities</a></li>
+        <li><a href="process.html" class="nav-link">Process</a></li>
+        <li><a href="intelligence.html" class="nav-link">Intelligence</a></li>
+        <li><a href="contact.html" class="nav-cta">Initiate Contact</a></li>
+      </ul>
+    </nav>
+    <button class="mobile-menu-toggle">☰</button>
+  </header>
+
+  <main class="intelligence-page">
+    <!-- Hero Section -->
+    <section class="intelligence-hero">
+      <div class="intelligence-hero-content">
+        <h1 class="intelligence-title">Neural Intelligence</h1>
+        <p class="intelligence-subtitle">
+          Beyond automation. Beyond chatbots. This is intelligence that thinks, decides, and evolves with your business.
+        </p>
+      </div>
+      <div class="scroll-indicator">
+        <span>explore.intelligence</span>
+        <div class="scroll-arrow"></div>
+      </div>
+      <div class="floating-particles">
+        <!-- Particles will be generated by JavaScript -->
+      </div>
+    </section>
+
+    <!-- Beyond Automation Section -->
+    <section class="beyond-section">
+      <div class="beyond-container">
+        <div class="beyond-content">
+          <h2 class="section-title">Beyond Automation</h2>
+          <p class="section-subtitle">
+            Neural Intelligence is about more than just speeding things up — it's about making your business smarter. We don't just automate tasks. We help your systems think, decide, adapt, and scale without breaking.
+          </p>
+          <div class="intelligence-features">
+            <div class="intelligence-feature">
+              <h3 class="feature-title">Think</h3>
+              <p class="feature-description">
+                Advanced reasoning capabilities that understand context, nuance, and complex business logic with human-like comprehension.
+              </p>
+            </div>
+            <div class="intelligence-feature">
+              <h3 class="feature-title">Decide</h3>
+              <p class="feature-description">
+                Autonomous decision-making based on data patterns, business rules, and learned behaviors from past interactions.
+              </p>
+            </div>
+            <div class="intelligence-feature">
+              <h3 class="feature-title">Adapt</h3>
+              <p class="feature-description">
+                Continuous learning and optimization based on feedback, outcomes, and changing business conditions in real-time.
+              </p>
+            </div>
+            <div class="intelligence-feature">
+              <h3 class="feature-title">Scale</h3>
+              <p class="feature-description">
+                Infinitely scalable architecture that grows with your business without performance degradation or complexity overhead.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="neural-visual">
+          <div class="neural-network-3d" id="neuralNetwork3D">
+            <!-- 3D network nodes will be generated dynamically -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Examples Section -->
+    <section class="examples-section">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">Examples of Neural Intelligence</h2>
+          <p class="section-subtitle">
+            Each agent improves as it operates — using feedback, instructions, and structured data to become more effective over time.
+          </p>
+        </div>
+        <div class="examples-grid">
+          <div class="example-card">
+            <div class="example-icon">QB</div>
+            <h3 class="example-title">Quote Builder Agent</h3>
+            <p class="example-description">
+              Intelligent quote generation that asks the right questions, calculates pricing logic, and sends quotes automatically with perfect accuracy.
+            </p>
+            <ul class="example-features">
+              <li>Dynamic question flows based on client responses</li>
+              <li>Complex pricing calculations with multiple variables</li>
+              <li>Automated follow-up sequences and reminders</li>
+              <li>Seamless integration with CRM and payment systems</li>
+            </ul>
+          </div>
+          
+          <div class="example-card">
+            <div class="example-icon">KW</div>
+            <h3 class="example-title">KPI Watchdog Agent</h3>
+            <p class="example-description">
+              Advanced monitoring system that scans your data, detects trends, and alerts you before problems escalate into critical issues.
+            </p>
+            <ul class="example-features">
+              <li>Predictive trend analysis and anomaly detection</li>
+              <li>Multi-source data aggregation and correlation</li>
+              <li>Intelligent alert prioritization and routing</li>
+              <li>Proactive recommendations for optimization</li>
+            </ul>
+          </div>
+          
+          <div class="example-card">
+            <div class="example-icon">ER</div>
+            <h3 class="example-title">Email Routing Agent</h3>
+            <p class="example-description">
+              Smart message processing that sorts inbound communications, flags high-priority leads, and responds with contextually appropriate templates.
+            </p>
+            <ul class="example-features">
+              <li>Intelligent message categorization and routing</li>
+              <li>Priority scoring based on content and sender</li>
+              <li>Contextual template selection and customization</li>
+              <li>Automated escalation for complex inquiries</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Comparison Section -->
+    <section class="comparison-section">
+      <div class="section-container">
+        <div class="section-header">
+          <h2 class="section-title">How It's Different from Basic AI</h2>
+          <p class="section-subtitle">
+            While chatbots simply respond to input, NeuralOps agents are designed around operational excellence and continuous improvement.
+          </p>
+        </div>
+        <div class="comparison-table">
+          <div class="table-wrapper">
+            <table class="feature-table">
+              <thead>
+                <tr>
+                  <th>Feature</th>
+                  <th>Chatbots</th>
+                  <th>NeuralOps Agents</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="feature-name">Responds to input</td>
+                  <td><span class="check-mark">✓</span></td>
+                  <td><span class="check-mark">✓</span></td>
+                </tr>
+                <tr>
+                  <td class="feature-name">Integrated with tools</td>
+                  <td><span class="x-mark">✗</span></td>
+                  <td><span class="check-mark">✓</span></td>
+                </tr>
+                <tr>
+                  <td class="feature-name">Can take action</td>
+                  <td><span class="x-mark">✗</span></td>
+                  <td><span class="check-mark">✓</span></td>
+                </tr>
+                <tr>
+                  <td class="feature-name">Learns from outcomes</td>
+                  <td><span class="x-mark">✗</span></td>
+                  <td><span class="check-mark">✓</span></td>
+                </tr>
+                <tr>
+                  <td class="feature-name">Designed around ops</td>
+                  <td><span class="x-mark">✗</span></td>
+                  <td><span class="check-mark">✓</span></td>
+                </tr>
+                <tr>
+                  <td class="feature-name">Autonomous decision making</td>
+                  <td><span class="x-mark">✗</span></td>
+                  <td><span class="check-mark">✓</span></td>
+                </tr>
+                <tr>
+                  <td class="feature-name">Multi-system orchestration</td>
+                  <td><span class="x-mark">✗</span></td>
+                  <td><span class="check-mark">✓</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="intelligence-cta">
+      <div class="section-container">
+        <div class="cta-content">
+          <h2 class="cta-title">Ready for Neural Intelligence?</h2>
+          <p class="cta-description">
+            Want to see what Neural Intelligence could do for your business? Let's explore the possibilities together.
+          </p>
+          <div class="cta-buttons">
+            <a href="contact.html" class="cta-button">Request Neural Assessment</a>
+            <a href="process.html" class="cta-button secondary">Explore Our Process</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2025 Neural Ops. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+        <a href="copyright.html" class="footer-link">Copyright Notices</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Enhanced 3D Brain Visualization
+    let scene, camera, renderer, brain;
+    let particles = [];
+    let connections = [];
+    
+    function initBrainScene() {
+      const canvas = document.getElementById('brain-canvas');
+      scene = new THREE.Scene();
+      camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setClearColor(0x000000, 0);
+      
+      // Create brain structure
+      createBrainStructure();
+      
+      camera.position.z = 100;
+      animate();
+    }
+    
+    function createBrainStructure() {
+      const geometry = new THREE.SphereGeometry(0.5, 8, 8);
+      const material = new THREE.MeshBasicMaterial({ 
+        color: 0x0066ff,
+        transparent: true,
+        opacity: 0.8
+      });
+      
+      // Create neural network nodes
+      for (let i = 0; i < 150; i++) {
+        const particle = new THREE.Mesh(geometry, material);
+        
+        // Position particles in a brain-like structure
+        const phi = Math.acos(-1 + (2 * i) / 150);
+        const theta = Math.sqrt(150 * Math.PI) * phi;
+        const radius = 30 + Math.random() * 20;
+        
+        particle.position.x = radius * Math.cos(theta) * Math.sin(phi);
+        particle.position.y = radius * Math.sin(theta) * Math.sin(phi);
+        particle.position.z = radius * Math.cos(phi);
+        
+        particle.userData = { originalPosition: particle.position.clone() };
+        particles.push(particle);
+        scene.add(particle);
+      }
+      
+      // Create connections between nearby particles
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const distance = particles[i].position.distanceTo(particles[j].position);
+          if (distance < 15 && Math.random() > 0.8) {
+            const geometry = new THREE.BufferGeometry().setFromPoints([
+              particles[i].position,
+              particles[j].position
+            ]);
