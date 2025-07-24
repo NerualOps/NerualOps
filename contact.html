@@ -35,18 +35,6 @@
       margin-bottom: 3rem;
     }
 
-    .contact-emoji {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      display: block;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-    }
-
     .contact-title {
       font-size: 3.5rem;
       font-weight: 800;
@@ -113,6 +101,7 @@
       justify-content: center;
       margin-bottom: 1.5rem;
       font-size: 1.5rem;
+      font-weight: bold;
     }
 
     .method-title {
@@ -196,6 +185,17 @@
       backdrop-filter: blur(10px);
     }
 
+    .form-select {
+      background-color: #000000;
+      color: #ffffff;
+    }
+
+    .form-select option {
+      background-color: #000000;
+      color: #ffffff;
+      padding: 10px;
+    }
+
     .form-input:focus, .form-textarea:focus, .form-select:focus {
       outline: none;
       border-color: var(--neural-primary);
@@ -264,10 +264,11 @@
       font-weight: 600;
     }
 
-    .priority-option .priority-emoji {
+    .priority-indicator {
       display: block;
       font-size: 1.5rem;
       margin-bottom: 0.5rem;
+      font-weight: bold;
     }
 
     .form-submit {
@@ -488,7 +489,6 @@
       <!-- Left Side: Contact Information -->
       <div class="contact-info">
         <div class="contact-header">
-          <span class="contact-emoji">🧠</span>
           <h1 class="contact-title">Neural Contact Interface</h1>
           <p class="contact-subtitle">
             Initiate connection with our neural operations team. Advanced AI systems monitor all channels for immediate response optimization.
@@ -497,26 +497,26 @@
 
         <div class="contact-methods">
           <div class="contact-method">
-            <div class="method-icon">📧</div>
+            <div class="method-icon">@</div>
             <div class="method-title">Direct Neural Link</div>
             <a href="mailto:neuralops@gmail.com" class="method-detail">neuralops@gmail.com</a>
           </div>
 
           <div class="contact-method">
-            <div class="method-icon">⚡</div>
+            <div class="method-icon">!</div>
             <div class="method-title">Priority Channel</div>
             <a href="mailto:neuralops@gmail.com?subject=URGENT:%20Neural%20Operations%20Priority%20Request" class="method-detail">Urgent Operations Support</a>
           </div>
 
           <div class="contact-method">
-            <div class="method-icon">🔗</div>
+            <div class="method-icon">#</div>
             <div class="method-title">Neural Network</div>
             <a href="https://nerualops.onrender.com" class="method-detail">nerualops.onrender.com</a>
           </div>
         </div>
 
         <div class="response-time">
-          <span>⏱️ Neural Response Time: &lt; 24 hours</span>
+          <span>Neural Response Time: &lt; 24 hours</span>
         </div>
 
         <a href="index.html" class="back-button">
@@ -565,15 +565,15 @@
             <label class="form-label" style="position: static; background: none; padding: 0; color: var(--neural-text); font-weight: 600; margin-bottom: 1rem; display: block;">Priority Level</label>
             <div class="priority-selector">
               <div class="priority-option" data-priority="low">
-                <span class="priority-emoji">🟢</span>
+                <span class="priority-indicator">LOW</span>
                 <span>Standard</span>
               </div>
               <div class="priority-option" data-priority="medium">
-                <span class="priority-emoji">🟡</span>
+                <span class="priority-indicator">MED</span>
                 <span>Elevated</span>
               </div>
               <div class="priority-option" data-priority="high">
-                <span class="priority-emoji">🔴</span>
+                <span class="priority-indicator">HIGH</span>
                 <span>Critical</span>
               </div>
             </div>
@@ -586,7 +586,7 @@
 
           <div class="ai-suggestions" id="aiSuggestions">
             <div class="ai-title">
-              🤖 AI Optimization Suggestions
+              AI Optimization Suggestions
             </div>
             <div class="ai-suggestion" onclick="applySuggestion('Include specific metrics about current operational challenges')">
               Include specific metrics about current operational challenges
@@ -600,11 +600,11 @@
           </div>
 
           <button type="submit" class="form-submit" id="submitBtn">
-            🚀 Initiate Neural Communication
+            Initiate Neural Communication
           </button>
 
           <div class="success-message" id="successMessage">
-            <h3>🎯 Neural Connection Established</h3>
+            <h3>Neural Connection Established</h3>
             <p>Your message has been processed through our neural networks. Expect optimized response within 24 hours.</p>
           </div>
         </form>
@@ -694,7 +694,7 @@ Timestamp: ${new Date().toISOString()}
       
       // Disable submit button
       submitBtn.disabled = true;
-      submitBtn.innerHTML = '🔄 Processing Neural Patterns...';
+      submitBtn.innerHTML = 'Processing Neural Patterns...';
       
       // Create mailto link
       const mailtoLink = `mailto:neuralops@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -714,7 +714,7 @@ Timestamp: ${new Date().toISOString()}
           form.reset();
           document.querySelectorAll('.priority-option').forEach(opt => opt.classList.remove('selected'));
           submitBtn.disabled = false;
-          submitBtn.innerHTML = '🚀 Initiate Neural Communication';
+          submitBtn.innerHTML = 'Initiate Neural Communication';
         }, 5000);
       }, 2000);
     });
