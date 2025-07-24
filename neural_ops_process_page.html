@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How NeuralOps Works - Neural Operations Platform</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .process-page {
+      min-height: 100vh;
+      padding: 120px 0 6rem 0;
+      background: radial-gradient(ellipse at center, rgba(0, 102, 255, 0.08) 0%, transparent 70%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 3rem;
+    }
+
+    .process-hero {
+      text-align: center;
+      margin-bottom: 6rem;
+    }
+
+    .process-title {
+      font-size: 4rem;
+      font-weight: 800;
+      margin-bottom: 2rem;
+      background: linear-gradient(135deg, var(--neural-text), var(--neural-primary), var(--neural-secondary));
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+    }
+
+    .process-subtitle {
+      font-size: 1.4rem;
+      color: var(--neural-muted);
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Overview Section */
+    .overview-section {
+      margin-bottom: 8rem;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--neural-text);
+      margin-bottom: 1.5rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neural-primary), var(--neural-secondary));
+      border-radius: 2px;
+    }
+
+    .overview-content {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 204, 255, 0.05));
+      border: 1px solid rgba(0, 102, 255, 0.2);
+      border-radius: 20px;
+      padding: 4rem;
+      backdrop-filter: blur(20px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .overview-content::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neural-primary), var(--neural-secondary));
+    }
+
+    .overview-text {
+      font-size: 1.3rem;
+      color: var(--neural-text);
+      line-height: 1.7;
+      font-weight: 500;
+    }
+
+    /* Process Steps */
+    .process-steps {
+      margin-bottom: 8rem;
+    }
+
+    .steps-grid {
+      display: grid;
+      gap: 4rem;
+      margin-top: 4rem;
+    }
+
+    .process-step {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.05), rgba(0, 204, 255, 0.02));
+      border: 1px solid rgba(0, 102, 255, 0.15);
+      border-radius: 20px;
+      padding: 3rem;
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .process-step:hover {
+      transform: translateY(-10px);
+      border-color: rgba(0, 102, 255, 0.3);
+      box-shadow: 0 30px 80px rgba(0, 102, 255, 0.2);
+    }
+
+    .process-step::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neural-primary), var(--neural-secondary));
+      transition: left 0.6s ease;
+    }
+
+    .process-step:hover::before {
+      left: 100%;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .step-number {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, var(--neural-primary), var(--neural-secondary));
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--neural-text);
+      flex-shrink: 0;
+    }
+
+    .step-title {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--neural-text);
+    }
+
+    .step-description {
+      font-size: 1.2rem;
+      color: var(--neural-muted);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .step-details {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .step-details li {
+      background: rgba(0, 102, 255, 0.1);
+      border: 1px solid rgba(0, 102, 255, 0.2);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--neural-text);
+      font-weight: 500;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .step-details li:hover {
+      background: rgba(0, 102, 255, 0.15);
+      border-color: var(--neural-primary);
+      transform: translateX(10px);
+    }
+
+    .step-details li::before {
+      content: '→';
+      color: var(--neural-primary);
+      font-weight: bold;
+      margin-right: 1rem;
+    }
+
+    /* Results Section */
+    .results-section {
+      margin-bottom: 6rem;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+
+    .result-card {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 204, 255, 0.05));
+      border: 1px solid rgba(0, 102, 255, 0.2);
+      border-radius: 16px;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .result-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--neural-primary), var(--neural-secondary));
+      transition: left 0.6s ease;
+    }
+
+    .result-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: rgba(0, 102, 255, 0.4);
+      box-shadow: 0 25px 60px rgba(0, 102, 255, 0.25);
+    }
+
+    .result-card:hover::before {
+      left: 100%;
+    }
+
+    .result-icon {
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, var(--neural-primary), var(--neural-secondary));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+
+    .result-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--neural-text);
+      margin-bottom: 1rem;
+    }
+
+    .result-description {
+      color: var(--neural-muted);
+      line-height: 1.5;
+    }
+
+    /* CTA Section */
+    .process-cta {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.15), rgba(0, 204, 255, 0.1));
+      border: 1px solid rgba(0, 102, 255, 0.3);
+      border-radius: 20px;
+      padding: 4rem;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .process-cta::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--neural-primary), var(--neural-secondary));
+    }
+
+    .cta-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: var(--neural-text);
+      margin-bottom: 1.5rem;
+    }
+
+    .cta-description {
+      font-size: 1.2rem;
+      color: var(--neural-muted);
+      margin-bottom: 3rem;
+      line-height: 1.6;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 1.5rem 4rem;
+      background: linear-gradient(135deg, var(--neural-primary), var(--neural-secondary));
+      color: var(--neural-text);
+      border: none;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.2rem;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 15px 40px rgba(0, 102, 255, 0.4);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 25px 60px rgba(0, 102, 255, 0.5);
+    }
+
+    .cta-button:hover::before {
+      left: 100%;
+    }
+
+    /* Floating Elements */
+    .floating-element {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.1), rgba(0, 204, 255, 0.05));
+      border-radius: 50%;
+      animation: floatAround 25s infinite linear;
+      pointer-events: none;
+    }
+
+    .floating-element:nth-child(1) {
+      top: 15%;
+      left: 5%;
+      animation-delay: 0s;
+    }
+
+    .floating-element:nth-child(2) {
+      top: 60%;
+      right: 8%;
+      animation-delay: -8s;
+    }
+
+    .floating-element:nth-child(3) {
+      bottom: 25%;
+      left: 15%;
+      animation-delay: -15s;
+    }
+
+    @keyframes floatAround {
+      0% { transform: translateY(0px) rotate(0deg); opacity: 0.3; }
+      25% { transform: translateY(-30px) rotate(90deg); opacity: 0.6; }
+      50% { transform: translateY(0px) rotate(180deg); opacity: 0.3; }
+      75% { transform: translateY(20px) rotate(270deg); opacity: 0.6; }
+      100% { transform: translateY(0px) rotate(360deg); opacity: 0.3; }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .process-container {
+        padding: 0 1.5rem;
+      }
+
+      .process-title {
+        font-size: 3rem;
+      }
+
+      .overview-content {
+        padding: 3rem;
+      }
+
+      .process-step {
+        padding: 2.5rem;
+      }
+
+      .step-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .process-title {
+        font-size: 2.5rem;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+
+      .overview-content {
+        padding: 2rem;
+      }
+
+      .overview-text {
+        font-size: 1.1rem;
+      }
+
+      .process-step {
+        padding: 2rem;
+      }
+
+      .step-title {
+        font-size: 1.5rem;
+      }
+
+      .step-description {
+        font-size: 1rem;
+      }
+
+      .process-cta {
+        padding: 3rem 2rem;
+      }
+
+      .cta-title {
+        font-size: 2rem;
+      }
+
+      .cta-button {
+        padding: 1.2rem 3rem;
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor-trail"></div>
+  <canvas class="neural-canvas" id="neuralCanvas"></canvas>
+
+  <!-- Floating Elements -->
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+  <div class="floating-element"></div>
+
+  <header class="header" id="header">
+    <a href="index.html" class="logo">neural.ops</a>
+    <nav>
+      <ul class="nav-menu">
+        <li><a href="index.html#services" class="nav-link">Capabilities</a></li>
+        <li><a href="process.html" class="nav-link">Process</a></li>
+        <li><a href="index.html#contact" class="nav-link">Intelligence</a></li>
+        <li><a href="contact.html" class="nav-cta">Initiate Contact</a></li>
+      </ul>
+    </nav>
+    <button class="mobile-menu-toggle">☰</button>
+  </header>
+
+  <main class="process-page">
+    <div class="process-container">
+      <!-- Hero Section -->
+      <div class="process-hero">
+        <h1 class="process-title">How NeuralOps Works</h1>
+        <p class="process-subtitle">
+          Our proven methodology transforms operational chaos into systematic excellence through intelligent automation and neural process optimization.
+        </p>
+      </div>
+
+      <!-- Overview Section -->
+      <section class="overview-section">
+        <div class="section-header">
+          <h2 class="section-title">Overview</h2>
+        </div>
+        <div class="overview-content">
+          <p class="overview-text">
+            NeuralOps delivers custom AI agents designed to automate the workflows that slow your business down. We follow a simple, proven process to build exactly what you need — fast.
+          </p>
+        </div>
+      </section>
+
+      <!-- Process Steps -->
+      <section class="process-steps">
+        <div class="section-header">
+          <h2 class="section-title">Our 3-Step Process</h2>
+        </div>
+        
+        <div class="steps-grid">
+          <!-- Step 1: Discovery -->
+          <div class="process-step">
+            <div class="step-header">
+              <div class="step-number">1</div>
+              <h3 class="step-title">Discovery</h3>
+            </div>
+            <p class="step-description">
+              We identify the operational bottlenecks or tasks that can be automated — quoting, lead handling, KPI alerts, internal requests, etc.
+            </p>
+            <ul class="step-details">
+              <li>Understand your current tools (CRM, website, Notion, spreadsheets)</li>
+              <li>Clarify goals and constraints</li>
+              <li>Choose the most valuable process to optimize first</li>
+            </ul>
+          </div>
+
+          <!-- Step 2: Agent Design -->
+          <div class="process-step">
+            <div class="step-header">
+              <div class="step-number">2</div>
+              <h3 class="step-title">Agent Design</h3>
+            </div>
+            <p class="step-description">
+              Based on your needs, we build a custom AI agent using GPT, automation logic, and dashboards.
+            </p>
+            <ul class="step-details">
+              <li>Create a workflow map</li>
+              <li>Build the prompt logic + optional UI</li>
+              <li>Integrate with your preferred tools (email, Notion, Flask, Airtable, etc.)</li>
+            </ul>
+          </div>
+
+          <!-- Step 3: Deployment & Iteration -->
+          <div class="process-step">
+            <div class="step-header">
+              <div class="step-number">3</div>
+              <h3 class="step-title">Deployment & Iteration</h3>
+            </div>
+            <p class="step-description">
+              We deploy the agent, test it, and refine based on real-world usage.
+            </p>
+            <ul class="step-details">
+              <li>Embed on your site or workspace</li>
+              <li>Train it on your SOPs (if needed)</li>
+              <li>Monitor results and expand its capabilities</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Results Section -->
+      <section class="results-section">
+        <div class="section-header">
+          <h2 class="section-title">What You Get</h2>
+        </div>
+        
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="result-icon">1:1</div>
+            <h3 class="result-title">Direct Collaboration</h3>
+            <p class="result-description">
+              1:1 collaboration with a real human (you) — no outsourced teams or generic solutions.
+            </p>
+          </div>
+
+          <div class="result-card">
+            <div class="result-icon">⚡</div>
+            <h3 class="result-title">Rapid Results</h3>
+            <p class="result-description">
+              Clear results in days, not months — we prioritize speed without sacrificing quality.
+            </p>
+          </div>
+
+          <div class="result-card">
+            <div class="result-icon">🔧</div>
+            <h3 class="result-title">Custom-Built Solution</h3>
+            <p class="result-description">
+              Custom-built solution — no off-the-shelf fluff that doesn't fit your specific needs.
+            </p>
+          </div>
+
+          <div class="result-card">
+            <div class="result-icon">🚀</div>
+            <h3 class="result-title">Full Deployment</h3>
+            <p class="result-description">
+              Fully hosted, embedded, or deliverable agent that seamlessly integrates with your workflow.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA Section -->
+      <section class="process-cta">
+        <h2 class="cta-title">Ready to Start Your Neural Transformation?</h2>
+        <p class="cta-description">
+          Let's identify your biggest operational bottleneck and build a custom AI agent to eliminate it.
+        </p>
+        <a href="contact.html" class="cta-button">Begin Discovery Process</a>
+      </section>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="footer-text">&copy; 2025 Neural Ops. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="privacy.html" class="footer-link">Privacy Policy</a>
+        <a href="contact.html" class="footer-link">Contact</a>
+        <a href="copyright.html" class="footer-link">Copyright Notices</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Smooth scrolling for internal links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe process steps for animation
+    document.querySelectorAll('.process-step, .result-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(50px)';
+      card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+      observer.observe(card);
+    });
+
+    // Enhanced cursor trail
+    document.addEventListener('mousemove', function(e) {
+      const trail = document.querySelector('.cursor-trail');
+      if (trail) {
+        trail.style.left = e.clientX - 10 + 'px';
+        trail.style.top = e.clientY - 10 + 'px';
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileToggle = document.querySelector('.mobile-menu-toggle');
+    const navMenu = document.querySelector('.nav-menu');
+    
+    if (mobileToggle && navMenu) {
+      mobileToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+      });
+    }
+  </script>
+</body>
+</html>
