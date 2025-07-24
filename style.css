@@ -653,6 +653,31 @@
       color: var(--neural-muted);
       font-size: 0.9rem;
     }
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 3rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-link {
+  color: var(--neural-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+  color: var(--neural-primary);
+}
+
 
     /* Responsive Design */
     @media (max-width: 1024px) {
