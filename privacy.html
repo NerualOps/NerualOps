@@ -33,12 +33,6 @@
       -webkit-text-fill-color: transparent;
     }
 
-    .policy-emoji {
-      font-size: 4rem;
-      margin-bottom: 1rem;
-      display: block;
-    }
-
     .policy-subtitle {
       font-size: 1rem;
       color: var(--neural-muted);
@@ -122,6 +116,17 @@
       transform: translateY(-2px);
     }
 
+    /* Remove blue highlighting on selection */
+    ::selection {
+      background: rgba(0, 102, 255, 0.2);
+      color: var(--neural-text);
+    }
+
+    ::-moz-selection {
+      background: rgba(0, 102, 255, 0.2);
+      color: var(--neural-text);
+    }
+
     @media (max-width: 768px) {
       .policy-page {
         padding: 100px 1.5rem 4rem 1.5rem;
@@ -129,10 +134,6 @@
 
       .policy-title {
         font-size: 2rem;
-      }
-
-      .policy-emoji {
-        font-size: 3rem;
       }
 
       .policy-content {
@@ -161,7 +162,6 @@
   <main class="policy-page">
     <div class="policy-container">
       <div class="policy-header">
-        <span class="policy-emoji">📜</span>
         <h1 class="policy-title">Privacy Policy</h1>
         <p class="policy-subtitle">Last updated: July 2025</p>
       </div>
@@ -191,8 +191,8 @@
     <div class="footer-content">
       <p class="footer-text">&copy; 2025 Neural Ops. All rights reserved.</p>
       <div class="footer-links">
-        <a href="privacy.html" class="footer-link">Privacy Policy</a>
-        <a href="contact.html" class="footer-link">Contact</a>
+        <a href="privacy_policy.html" class="footer-link">Privacy Policy</a>
+        <a href="contact_page.html" class="footer-link">Contact</a>
         <a href="copyright.html" class="footer-link">Copyright Notices</a>
       </div>
     </div>
