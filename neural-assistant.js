@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
           <button class="popup-btn" id="popup-help">I Need AI Help</button>
         </div>
         <div id="popup-followup" class="hidden">
-          <input id="popup-user-input" type="text" placeholder="Type your response..." />
+          <input id="popup-user-input" type="text" placeholder="Type your response..." disabled />
           <button class="popup-btn" id="popup-submit">Submit</button>
         </div>
       </div>
@@ -28,12 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitBtn = document.getElementById("popup-submit");
 
   const routes = {
-    analytics: "intelligence.html#analytics",
-    dashboard: "intelligence.html#services",
     contact: "contact.html",
-    quote: "intelligence.html#quote",
-    automation: "process.html",
-    support: "contact.html"
+    intelligence: "intelligence.html",
+    process: "process.html",
+    privacy: "privacy.html",
+    copyright: "copyright.html"
   };
 
   function simulateTyping(text, delay = 35, callback) {
@@ -55,33 +54,24 @@ document.addEventListener("DOMContentLoaded", function () {
   function handleResponse(input) {
     const key = input.toLowerCase().trim();
     let match = Object.keys(routes).find(k => key.includes(k));
-    let target = routes[match];
-
-    if (!target) {
-      if (key.includes("quote") || key.includes("cost")) {
-        target = routes.quote;
-      } else if (key.includes("demo") || key.includes("tour")) {
-        target = routes.dashboard;
-      } else {
-        target = routes.contact;
-      }
-    }
-
+    let target = routes[match] || "contact.html";
     window.location.href = target;
   }
 
   document.getElementById("popup-tour").onclick = () => {
     buttonBlock.classList.add("hidden");
-    simulateTyping("What are you most interested in seeing?", 35, () => {
+    simulateTyping("Which part of NeuralOps are you most curious about? (e.g. intelligence, process, contact, privacy, copyright)", 35, () => {
       followupBlock.classList.remove("hidden");
+      inputField.disabled = false;
       inputField.focus();
     });
   };
 
   document.getElementById("popup-help").onclick = () => {
     buttonBlock.classList.add("hidden");
-    simulateTyping("What kind of AI help do you need?", 35, () => {
+    simulateTyping("Tell me what kind of AI assistance you’re looking for and I’ll guide you.", 35, () => {
       followupBlock.classList.remove("hidden");
+      inputField.disabled = false;
       inputField.focus();
     });
   };
@@ -91,7 +81,8 @@ document.addEventListener("DOMContentLoaded", function () {
     if (userInput.trim()) {
       chatArea.innerHTML += "<br><strong>You:</strong> " + userInput;
       followupBlock.classList.add("hidden");
-      simulateTyping("Got it. Taking you to the right place...", 25, () => {
+      inputField.disabled = true;
+      simulateTyping("Got it. Routing you now...", 25, () => {
         handleResponse(userInput);
       });
     }
