@@ -1,59 +1,168 @@
+/* NeuralOps AI Assistant Styles */
 #neural-popup-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(5, 5, 10, 0.4); /* lighter, subtle overlay */
+  background: rgba(0, 0, 0, 0.85);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 10000;
   font-family: 'Inter', sans-serif;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#neural-popup-overlay.show {
+  opacity: 1;
 }
 
 #neural-popup-box {
-  background: linear-gradient(145deg, #0c0c12, #0a0a0f);
-  border: 1px solid #00ccff;
-  padding: 2rem;
-  border-radius: 24px;
+  background: linear-gradient(145deg, #1a1a2e, #16213e);
+  border: 1px solid #4a9eff;
+  position: relative;
+  padding: 2.5rem;
+  border-radius: 16px;
   width: 90%;
-  max-width: 460px;
-  color: white;
+  max-width: 500px;
+  color: #e8eaed;
   text-align: center;
-  box-shadow: 0 0 30px rgba(0, 204, 255, 0.35), 0 0 10px rgba(0, 102, 255, 0.4);
-  backdrop-filter: blur(10px);
+  box-shadow: 
+    0 0 30px rgba(74, 158, 255, 0.2),
+    0 20px 40px rgba(0, 0, 0, 0.6),
+    inset 0 1px 0 rgba(74, 158, 255, 0.1);
+  transform: scale(0.9) translateY(20px);
+  transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+#neural-popup-overlay.show #neural-popup-box {
+  transform: scale(1) translateY(0);
+}
+
+/* AI Circuit Pattern Background */
+#neural-popup-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    radial-gradient(circle at 20% 80%, rgba(74, 158, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(74, 158, 255, 0.03) 0%, transparent 50%),
+    linear-gradient(45deg, transparent 48%, rgba(74, 158, 255, 0.02) 49%, rgba(74, 158, 255, 0.02) 51%, transparent 52%);
+  z-index: -1;
+}
+
+/* Animated border pulse */
+#neural-popup-box::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: linear-gradient(45deg, 
+    #4a9eff, #3d7acc, #4a9eff, #2d5599);
+  border-radius: 16px;
+  z-index: -2;
+  animation: aiPulse 3s ease-in-out infinite alternate;
+}
+
+@keyframes aiPulse {
+  0% { 
+    opacity: 0.4;
+    box-shadow: 0 0 15px rgba(74, 158, 255, 0.2);
+  }
+  100% { 
+    opacity: 0.7;
+    box-shadow: 0 0 25px rgba(74, 158, 255, 0.3);
+  }
 }
 
 .popup-title {
-  font-size: 1.6rem;
-  color: #00ccff;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4a9eff, #6bb6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
 }
 
-#typing-indicator.dots::after {
-  content: '';
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
+#typing-indicator {
+  display: inline-flex;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+#typing-indicator.show {
+  opacity: 1;
+}
+
+#typing-indicator .dot {
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
-  background: #00ccff;
-  animation: blink 1s infinite;
-  margin-left: 0.5rem;
+  background: #4a9eff;
+  animation: aiThinking 1.4s infinite ease-in-out;
+  box-shadow: 0 0 8px rgba(74, 158, 255, 0.4);
 }
 
-@keyframes blink {
-  0%, 100% { opacity: 0.2; }
-  50% { opacity: 1; }
+#typing-indicator .dot:nth-child(1) { animation-delay: 0s; }
+#typing-indicator .dot:nth-child(2) { animation-delay: 0.2s; }
+#typing-indicator .dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes aiThinking {
+  0%, 80%, 100% { 
+    transform: scale(0.8);
+    opacity: 0.5;
+    box-shadow: 0 0 4px rgba(74, 158, 255, 0.3);
+  }
+  40% { 
+    transform: scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 12px rgba(74, 158, 255, 0.6);
+  }
 }
 
 #popup-chat-area {
-  font-size: 1rem;
-  color: #ccc;
-  margin: 1rem 0 1rem;
-  min-height: 60px;
-  line-height: 1.5;
+  font-size: 1.1rem;
+  color: #c9d1d9;
+  margin: 1.5rem 0;
+  min-height: 80px;
+  line-height: 1.6;
   text-align: left;
+  background: rgba(74, 158, 255, 0.03);
+  padding: 1.2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(74, 158, 255, 0.15);
+  position: relative;
+}
+
+#popup-chat-area::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(74, 158, 255, 0.4), transparent);
+  border-radius: 12px 12px 0 0;
+  animation: scanLine 4s ease-in-out infinite;
+}
+
+@keyframes scanLine {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
 }
 
 .popup-buttons,
@@ -62,35 +171,141 @@
   justify-content: center;
   gap: 1rem;
   flex-wrap: wrap;
-  margin-top: 1rem;
+  margin-top: 1.5rem;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.popup-buttons.show,
+#popup-followup.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .popup-btn {
-  background: linear-gradient(135deg, #0066ff, #00ccff);
+  background: linear-gradient(135deg, #4a9eff, #3d7acc);
   border: none;
-  color: white;
-  padding: 0.8rem 1.2rem;
+  color: #ffffff;
+  padding: 1rem 1.5rem;
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
   font-size: 0.95rem;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(74, 158, 255, 0.15);
+}
+
+.popup-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.popup-btn:hover::before {
+  left: 100%;
 }
 
 .popup-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(0, 204, 255, 0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(74, 158, 255, 0.25);
+  background: linear-gradient(135deg, #5aa3ff, #4a86d4);
+}
+
+.popup-btn:active {
+  transform: translateY(-1px);
 }
 
 #popup-user-input {
-  padding: 0.6rem;
-  border-radius: 6px;
-  border: 1px solid #333;
-  width: 70%;
-  background: #1a1a24;
-  color: white;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  border: 2px solid rgba(74, 158, 255, 0.3);
+  width: 65%;
+  background: rgba(22, 33, 62, 0.8);
+  color: #e8eaed;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+#popup-user-input:focus {
+  border-color: #4a9eff;
+  box-shadow: 0 0 15px rgba(74, 158, 255, 0.3);
+  background: rgba(22, 33, 62, 1);
+}
+
+#popup-user-input::placeholder {
+  color: #7d8590;
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.fade-out {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Close button */
+.close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: #7d8590;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  color: #4a9eff;
+  background: rgba(74, 158, 255, 0.1);
+  box-shadow: 0 0 10px rgba(74, 158, 255, 0.2);
+}
+
+/* User message styling */
+.user-message {
+  background: rgba(74, 158, 255, 0.08);
+  border-left: 3px solid #4a9eff;
+  padding: 0.8rem;
+  margin: 0.8rem 0;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  color: #c9d1d9;
+  box-shadow: 0 2px 8px rgba(74, 158, 255, 0.1);
+}
+
+/* Loading animation */
+.loading-dots {
+  display: inline-block;
+  color: #4a9eff;
+}
+
+.loading-dots::after {
+  content: '...';
+  display: inline-block;
+  animation: loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots {
+  0%, 20% { content: ''; }
+  40% { content: '.'; }
+  60% { content: '..'; }
+  80%, 100% { content: '...'; }
 }
