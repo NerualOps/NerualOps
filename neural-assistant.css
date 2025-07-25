@@ -1,0 +1,85 @@
+
+#neural-assistant-widget {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  font-family: 'Inter', sans-serif;
+  z-index: 9999;
+}
+
+#neural-chat-icon {
+  background: linear-gradient(135deg, #0066ff, #00ccff);
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+#neural-chat-box {
+  width: 300px;
+  background: #050508;
+  border: 1px solid #0066ff;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#neural-chat-box.hidden {
+  display: none;
+}
+
+#neural-chat-header {
+  font-weight: bold;
+  color: #00ccff;
+  margin-bottom: 0.5rem;
+}
+
+#neural-chat-content {
+  height: 200px;
+  overflow-y: auto;
+  background: #0a0a0f;
+  border: 1px solid #1a1a24;
+  border-radius: 6px;
+  padding: 0.5rem;
+  color: white;
+  font-size: 0.9rem;
+}
+
+#neural-chat-content .msg {
+  margin: 0.3rem 0;
+}
+
+#neural-chat-content .msg.bot {
+  color: #00ccff;
+}
+
+#neural-chat-content .msg.user {
+  color: #ffffff;
+  text-align: right;
+}
+
+#neural-chat-input {
+  background: #1a1a24;
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+}
+
+#neural-chat-send {
+  background: linear-gradient(135deg, #0066ff, #00ccff);
+  color: white;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
