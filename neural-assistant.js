@@ -28,9 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const submitBtn = document.getElementById("popup-submit");
 
   const routes = {
-    contact: "contact.html",
     intelligence: "intelligence.html",
     process: "process.html",
+    contact: "contact.html",
     privacy: "privacy.html",
     copyright: "copyright.html"
   };
@@ -52,34 +52,54 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function handleResponse(input) {
-    const key = input.toLowerCase().trim();
-    let match = Object.keys(routes).find(k => key.includes(k));
-    let target = routes[match] || "contact.html";
-    window.location.href = target;
+    const key = input.toLowerCase();
+    for (let k in routes) {
+      if (key.includes(k)) {
+        return window.location.href = routes[k];
+      }
+    }
+    // fallback logic
+    if (key.includes("ai") || key.includes("automation")) {
+      window.location.href = "intelligence.html";
+    } else if (key.includes("how") || key.includes("work")) {
+      window.location.href = "process.html";
+    } else if (key.includes("legal") || key.includes("policy")) {
+      window.location.href = "privacy.html";
+    } else {
+      window.location.href = "contact.html";
+    }
   }
 
   document.getElementById("popup-tour").onclick = () => {
     buttonBlock.classList.add("hidden");
-    simulateTyping("Which part of NeuralOps are you most curious about? (e.g. intelligence, process, contact, privacy, copyright)", 35, () => {
-      followupBlock.classList.remove("hidden");
-      inputField.disabled = false;
-      inputField.focus();
-    });
+    simulateTyping(
+      "Which of these are you most interested in? (AI systems, how it works, automation, legal/policy info, or contact)",
+      35,
+      () => {
+        followupBlock.classList.remove("hidden");
+        inputField.disabled = false;
+        inputField.focus();
+      }
+    );
   };
 
   document.getElementById("popup-help").onclick = () => {
     buttonBlock.classList.add("hidden");
-    simulateTyping("Tell me what kind of AI assistance you’re looking for and I’ll guide you.", 35, () => {
-      followupBlock.classList.remove("hidden");
-      inputField.disabled = false;
-      inputField.focus();
-    });
+    simulateTyping(
+      "Tell me what kind of AI assistance you’re looking for and I’ll guide you.",
+      35,
+      () => {
+        followupBlock.classList.remove("hidden");
+        inputField.disabled = false;
+        inputField.focus();
+      }
+    );
   };
 
   submitBtn.onclick = () => {
-    const userInput = inputField.value;
-    if (userInput.trim()) {
-      chatArea.innerHTML += "<br><strong>You:</strong> " + userInput;
+    const userInput = inputField.value.trim();
+    if (userInput) {
+      chatArea.innerHTML += `<br><strong>You:</strong> ${userInput}`;
       followupBlock.classList.add("hidden");
       inputField.disabled = true;
       simulateTyping("Got it. Routing you now...", 25, () => {
